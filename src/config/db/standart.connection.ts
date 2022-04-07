@@ -1,5 +1,5 @@
 import { createConnections } from 'typeorm';
-import { Replace } from '../../apps/Replace/Replace.entity';
+import { Replace } from '../../apps/Restaurante/Replace.entity';
 import { dbConnections } from '../config';
 
 const connection = createConnections([
