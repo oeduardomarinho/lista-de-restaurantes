@@ -1,6 +1,6 @@
-import { Repository , getConnection} from 'typeorm';
+import { Model, Repository } from 'sequelize-typescript';
+import { connection } from '../config/db/standart.connection';
 
-
-export function connection<T>(Type: { new(): T }, connectionName: string): Repository<T> {
-  return getConnection(connectionName).getRepository(Type)
+export function connect<T extends Model>(Type: { new (): T }): Repository<T> {
+  return connection.getRepository(Type);
 }

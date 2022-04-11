@@ -1,12 +1,14 @@
 import { Request, Response, Router } from 'express';
-// import replaceRoute from './apps/Replace/routes';
+import restauranteRoute from './apps/Restaurante/routes';
+import produtoRoute from './apps/Produto/routes';
 
 const routes = Router();
 
 routes.get('/', (_: Request, res: Response) => {
-  return res.json({ message: 'Ok!' });
+  return res.sendStatus(200);
 });
 
-// routes.use('/replace', replaceRoute);
+routes.use('/restaurant', restauranteRoute);
+routes.use('/restaurant/:restaurantId/product', produtoRoute);
 
 export default routes;

@@ -1,17 +1,39 @@
-import { createConnections } from 'typeorm';
-import { Replace } from '../../apps/Restaurante/Replace.entity';
+import { Sequelize } from 'sequelize-typescript';
+import { Restaurante } from '../../apps/Restaurante/Restaurante.entity';
+import { Produto } from '../../apps/Produto/Produto.entity';
 import { dbConnections } from '../config';
+import { Client } from 'pg';
 
-const connection = createConnections([
+const client: Client = new Client({
+  database: 'postgres',
+  user: dbConnections.postgres.username,
+  password: dbConnections.postgres.password,
+  host: dbConnections.postgres.host,
+  port: dbConnections.postgres.port,
+});
+
+client
+  .connect()
+  .then(async () => {
+    await client
+      .query('CREATE DATABASE "' + dbConnections.postgres.database_name + '"')
+      .catch(() => {});
+  })
+  .finally(() => client.end());
+
+const connection: Sequelize = new Sequelize(
+  dbConnections.postgres.database_name,
+  dbConnections.postgres.username,
+  dbConnections.postgres.password,
   {
-    name: dbConnections.mongo.name,
-    type: 'mongodb', // replace with necessary by (mongodb|mysql|mssql|etc...)
-    url: dbConnections.mongo.conn,
-    entities: [Replace],
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    synchronize: true,
-  },
-]);
+    dialect: 'postgres',
+    host: dbConnections.postgres.host,
+    port: dbConnections.postgres.port,
+    models: [Restaurante, Produto],
+    repositoryMode: true,
+    validateOnly: dbConnections.validateOnly
+  }
+);
 
-export default connection;
+
+export { connection };

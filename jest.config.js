@@ -10,7 +10,8 @@ module.exports = {
   "modulePathIgnorePatterns": [
     "dist",
     "node_modules",
-    "coverage"
+    "coverage",
+    "fixing-modules"
   ],
   "testMatch": [
     "**/?(*.)+(spec|test).(js|ts|tsx)"

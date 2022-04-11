@@ -1,15 +1,13 @@
 import { Router } from 'express';
-import { validateRestaurant } from './validator';
+import { validateProduct } from './validator';
 import { validatePK } from '../util/validator';
-import * as controller from './RestauranteController';
+import * as controller from './ProdutoController';
 import 'express-async-errors';
 
-const route = Router();
+const route = Router({ mergeParams: true });
 
-route.get('/all', controller.list);
-route.get('/:id/products', validatePK, controller.listProducts);
 route.get('/:id', validatePK, controller.findOne);
-route.post('/', validateRestaurant, controller.create);
+route.post('/', validatePK, validateProduct, controller.create);
 route.put('/:id', validatePK, controller.update);
 route.delete('/:id', validatePK, controller.deleteOne);
 

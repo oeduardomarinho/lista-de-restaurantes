@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: node
+    build: 
+      context: .
+      target: production
+    ports:
+      - "3000:${PORT:-3000}"
+    env_file:
+      - .env
+    networks:
+      - redeContaineres
+    depends_on:
+      - database
+  database:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:${POSTGRES_PORT:-5432}
+    env_file:
+      - .env
+    networks:
+      - redeContaineres
+  dbadmin:
+    container_name: my-dbadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: eduardo@email.com
+      PGADMIN_DEFAULT_PASSWORD: "123"
+    depends_on:
+      - database
+    ports:
+      - "9080:80"
+    networks:
+      - redeContaineres
+  
+networks:
+  redeContaineres:
+    driver: bridge

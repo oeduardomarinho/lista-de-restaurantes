@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  api:
+    build: 
+      target: test
+    volumes:
+      - ./coverage:/usr/src/app/coverage
+    env_file:
+      - .env.test
