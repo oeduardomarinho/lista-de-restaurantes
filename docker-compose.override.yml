@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  api:
+    build: 
+      target: development
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+    env_file:
+      - .env.development
+  database:
+    volumes:
+      - ./src/config/db/data:/usr/local/pgsql/data
+    env_file:
+      - .env.development

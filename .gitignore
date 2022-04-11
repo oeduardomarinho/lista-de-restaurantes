@@ -30,6 +30,3 @@ node_modules
 
 # Ignore built ts files
 dist/**/*
-
-# Docker-compose for dev
-docker-compose.override.yml
