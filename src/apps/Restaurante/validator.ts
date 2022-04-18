@@ -8,7 +8,7 @@ export const validateRestaurant = async (
   _: Response,
   next: NextFunction
 ) => {
-  const timeRegex = /\d{2}:\d{2}/g; // HH:mm
+  const timeRegex = /(?<HH>[0-1][0-9]|2[0-4]):(?<mm>[0-5][0-9])/g; // HH:mm -> 00:00 to 23:59
 
   let work_scheduleSchema = yup
     .object()
